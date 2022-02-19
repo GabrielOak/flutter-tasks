@@ -26,6 +26,9 @@ class _TaskCardState extends State<TaskCard> {
         ),
         child: InkWell(
           splashColor: Colors.grey[600],
+          onLongPress: () {
+            print(widget.task.id);
+          },
           onTap: () {
             setState(() {
               widget.task.isDone = !widget.task.isDone ;
@@ -53,8 +56,8 @@ class _TaskCardState extends State<TaskCard> {
                   const Spacer(),
                   Container(
                       child: widget.task.isDone
-                          ? Icon(Icons.check_box)
-                          : Icon(Icons.check_box_outline_blank)),
+                          ? const Icon(Icons.check_box)
+                          : const Icon(Icons.check_box_outline_blank)),
                 ],
               ),
             ),
