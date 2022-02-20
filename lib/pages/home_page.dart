@@ -77,8 +77,8 @@ class _HomePageState extends State<HomePage> {
           showBarModalBottomSheet(
               context: context,
               builder: (BuildContext context) {
-                return const AddTaskModal();
-              });
+                return AddTaskModal();
+              }).then((value) => setState(() {}));
         },
         backgroundColor: Colors.black,
       ),

@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:tasks/database/dao/tasks_dao.dart';
+import 'package:tasks/models/task.dart';
 import 'package:tasks/widgets/input.dart';
 
 class AddTaskModal extends StatelessWidget {
-  const AddTaskModal({Key? key}) : super(key: key);
+  
+  AddTaskModal({Key? key}) : super(key: key);
 
+  final TasksDao _dao = TasksDao();
+  final inputController = TextEditingController();
+  
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -33,13 +39,14 @@ class AddTaskModal extends StatelessWidget {
                   ),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.symmetric(
+              Padding(
+                padding: const EdgeInsets.symmetric(
                   vertical: 16,
                   horizontal: 8,
                 ),
                 child: Input(
                   hintText: 'Task name',
+                  controller: inputController,
                 ),
               ),
               Padding(
@@ -48,7 +55,11 @@ class AddTaskModal extends StatelessWidget {
                   horizontal: 8,
                 ),
                 child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      final task = Task(0, inputController.text, false);
+                      _dao.save(task);
+                      Navigator.pop(context);
+                    },
                     child: const Text('Add'),
                     style: ElevatedButton.styleFrom(
                       primary: Colors.black,
