@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:tasks/database/dao/tasks_dao.dart';
+import 'package:tasks/widgets/add_task_modal.dart';
 import 'package:tasks/widgets/loading_indicator.dart';
 import 'package:tasks/widgets/task_card.dart';
 import 'package:tasks/models/task.dart';
@@ -65,20 +67,19 @@ class _HomePageState extends State<HomePage> {
                 }),
           ),
         ],
-      )
-          // Expanded(
-          //   child: Column(
-          //   children: [
-          //     TaskCard(task: Task(1, 'Estudar inglês', false)),
-          //   ],
-          // ))
-          ),
+      )),
       floatingActionButton: FloatingActionButton(
         child: const Icon(
           Icons.add,
           size: 30,
         ),
-        onPressed: () {},
+        onPressed: () {
+          showBarModalBottomSheet(
+              context: context,
+              builder: (BuildContext context) {
+                return const AddTaskModal();
+              });
+        },
         backgroundColor: Colors.black,
       ),
     );
