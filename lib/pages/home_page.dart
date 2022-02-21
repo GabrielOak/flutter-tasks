@@ -15,7 +15,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final TasksDao _dao = TasksDao();
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -55,7 +54,7 @@ class _HomePageState extends State<HomePage> {
                             itemCount: tasks.length,
                             itemBuilder: (context, index) {
                               final Task task = tasks[index];
-                              return TaskCard(task: task);
+                              return TaskCard(task: task, callback: () {setState(() {});});
                             });
                       } else {
                         return const Center(

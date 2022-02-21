@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:tasks/database/dao/tasks_dao.dart';
 import 'package:tasks/models/task.dart';
 
 class TaskCard extends StatefulWidget {
-  const TaskCard({
+  TaskCard({
     Key? key,
     required this.task,
+    required this.callback,
   }) : super(key: key);
 
   final Task task;
+  final Function callback;
+  final TasksDao _dao = TasksDao();
 
   @override
   _TaskCardState createState() => _TaskCardState();
@@ -20,7 +24,6 @@ class _TaskCardState extends State<TaskCard> {
     return Padding(
       padding: const EdgeInsets.only(left: 8, right: 8, top: 5),
       child: Card(
-        // color: Colors.blue,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0),
         ),
@@ -29,10 +32,9 @@ class _TaskCardState extends State<TaskCard> {
           onLongPress: () {
             print(widget.task.id);
           },
-          onTap: () {
-            setState(() {
-              widget.task.isDone = !widget.task.isDone ;
-            });
+          onTap: () async {
+            await widget._dao.update(widget.task.id, widget.task.isDone ? 0 : 1);
+            widget.callback();
           },
           child: Padding(
             padding:

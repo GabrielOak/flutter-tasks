@@ -13,6 +13,17 @@ class TasksDao {
     Map<String, dynamic> taskMap = _toMap(task);
     return db.insert('tasks', taskMap);
   }
+
+  Future<int> remove(int id) async {
+    final Database db = await createDatabase();
+    return db.rawDelete('DELETE FROM tasks WHERE id = $id');
+  }
+
+  Future<int> update(int id, int isDone) async {
+    final Database db = await createDatabase();
+    return db.rawUpdate('UPDATE tasks SET is_done = $isDone WHERE id = $id');
+  }
+
   Map<String, dynamic> _toMap(Task task) {
     final Map<String, dynamic> taskMap = {};
     taskMap['title'] = task.title;
@@ -21,7 +32,7 @@ class TasksDao {
   }
   Future<List<Task>> findAll() async {
     final Database db = await createDatabase();
-    final List<Map<String, dynamic>> result = await db.query('tasks');
+    final List<Map<String, dynamic>> result = await db.query('tasks', orderBy: 'is_done ASC, id DESC');
     List<Task> tasks = _toList(result);
     return tasks;
   }
